@@ -245,10 +245,13 @@
                                         Personal care
                                     </option>
                                     <option value="food&beverage">
-                                        food&beverage
+                                        Food & Beverage
                                     </option>
                                     <option value="General Industry">
                                         General Industry
+                                    </option>
+                                    <option value="Project">
+                                        Project
                                     </option>
                                 </select>
                                 <div

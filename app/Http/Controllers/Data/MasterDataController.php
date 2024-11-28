@@ -30,7 +30,7 @@ class MasterDataController extends Controller
     public static function ambilSemuaData(Model $dataModel, array $relation = [])
     {
         if ($relation != []) {
-            $data = $dataModel->with($relation)->paginate(10);
+            $data = $dataModel->with($relation)->paginate(15);
         } else {
             $data = $dataModel->paginate(10);
         }
@@ -698,6 +698,8 @@ class MasterDataController extends Controller
             'id_customer' => 'required',
             'project_desc' => 'required',
             'project_year' => 'required',
+            'project_type' => 'required',
+            'project_gambar' => 'nullable|max:4000|mimes:png,jpg',
         ]);
 
         $project = new Project();
@@ -705,7 +707,11 @@ class MasterDataController extends Controller
         $project->id_customer = $data['id_customer'];
         $project->project_desc = $data['project_desc'];
         $project->project_year = $data['project_year'];
-        $project->status = $data['status'];
+        $project->type  = $data['project_type'];
+        if ($request->file('project_gambar')) {
+            $images = new FileProcess($request->file('project_gambar'), Str::slug($data['project_name']), 'project');
+            $project->project_gambar = $images->uploadFoto();
+        }
         $project->save();
         return redirect()->back()->with('message', 'Berhasil Create Project Baru');
     }
@@ -718,7 +724,9 @@ class MasterDataController extends Controller
         $request->validate([
             'project_name' => 'required',
             'id_customer' => 'required',
-            'project_desc' => 'required',
+            'project_desc' => 'nullable',
+            'project_type' => 'nullable',
+            'project_gambar' => 'nullable|max:4000|mimes:png,jpg',
         ]);
 
         $project = Project::find($id);
@@ -726,7 +734,12 @@ class MasterDataController extends Controller
         $project->id_customer = $data['id_customer'];
         $project->project_desc = $data['project_desc'];
         $project->project_year = $data['project_year'];
-        $project->status = $data['status'];
+        $project->type = $data['project_type'];
+        if ($request->file('project_gambar')) {
+            FileProcess::deleteFoto($project->project_gambar, 'project');
+            $images = new FileProcess($request->file('project_gambar'), Str::slug($data['project_name']), 'project');
+            $project->project_gambar = $images->uploadFoto();
+        }
         $project->update();
         return redirect()->back()->with('message', 'Berhasil Update Project');
     }
@@ -735,6 +748,7 @@ class MasterDataController extends Controller
     public function deleteProject($id = null)
     {
         $project = Project::find($id);
+        FileProcess::deleteFoto($project->project_gambar, 'project');
         $project->delete();
         return redirect()->back()->with('message', 'Berhasil Hapus Project');
     }

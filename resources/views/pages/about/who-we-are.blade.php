@@ -7,15 +7,17 @@
         <div class="absolute bg-caa-primary top-0 h-full flex flex-col justify-center bg-opacity-50 w-full rounded-2xl">
             <div class=" mx-auto ">
                 <div class="  text-center text-gray-100 ">
-                    <h1 class=" font-bold text-6xl  ">ABOUT <span class=" underline ">US</span></h1>
+                    <h1 class=" font-bold text-6xl  ">ABOUT US</h1>
                 </div>
             </div>
         </div>
     </div>
     @include('components.nav-about')
+
     <div class="flex justify-between gap-2 my-10 grid grid-cols-1 md:grid-cols-2">
         <div class="flex-1 bg-slate-50 rounded-lg relative">
-            <img class=" w-full h-full object-cover rounded-lg " src="/assets/img/teams.jpg" alt="">
+            {{-- <img class=" w-full h-full object-cover rounded-lg " src="/assets/img/teams.jpg" alt=""> --}}
+            <img class=" w-full max-[700]: object-cover rounded-lg " src="/assets/img/teams.jpg" alt="">
             <div class="absolute top-0 flex w-full bg-caa-primary bg-opacity-50 rounded-tl-lg rounded-tr-lg">
                 <p class="py-20 mx-auto w-full text-center font-semibold text-2xl text-white uppercase ">
                     Our Wonderful Teams

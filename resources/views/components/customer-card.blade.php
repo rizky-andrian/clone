@@ -33,7 +33,7 @@
 
     /* Enable animation */
     .marquee__content {
-        animation: scroll 25s linear infinite;
+        animation: scroll 25s linear infinite;  
     }
 
     /* Reverse animation */
@@ -98,19 +98,59 @@
     #section_customer {
         margin-block: 3rem;
         margin: 20px 250px;
-        width: 100vw;
+        /* width: 100vw; */
         overflow: hidden;
+        text-align: center;
     }
 
     #section_customer>*+* {
         margin-block-start: 0.5rem;
     }
+
+    .marquee__content:hover {
+        animation-play-state: paused;
+    }
+
+    @media (max-width: 768px) {
+        .marquee__content img {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 5px;
+            border-radius: 5px;
+        }
+        .marquee {
+            --gap: 0.5rem;
+            overflow-x: scroll;
+            -webkit-overflow-scrolling: touch;
+        }
+        #section_customer {
+            margin: 10px;
+            width: 100%;
+        }
+        h2 {
+            font-size: 1.5rem;
+        }
+        .marquee__content {
+            animation-duration: 40s;
+        }
+    }
+    @media (max-width: 576px) {
+        .marquee {
+            flex-direction: column;
+            overflow-y: auto;
+            gap: 1rem;
+        }
+        .marquee__content {
+            animation: none;
+        }
+    }
+
 </style>
 
 <section id="section_customer" class="" >
     <div class=" flex flex-col gap-10">
         <div>
-            <h2 class="text-left text-3xl text-primary font-semibold">Our Customer</h2>
+            <h2 class="text-center text-3xl text-primary font-semibold">Our Customer</h2>
         </div>
     </div>
 
@@ -119,12 +159,11 @@
         <div class="marquee enable-animation">
             <ul class="marquee__content">
                 @foreach ($groupedCustomers->get('Pharmaceutical') as $item)
-                    <img src="/storage/img/customer/{{ $item->customer_logo }}" alt="">
+                    <img src="/storage/img/customer/{{ $item->customer_logo }}" alt="{{ $item->customer_name }}">
                 @endforeach
             </ul>
         </div>
     @endif
-
 
    
     {{-- Personal Care Customers --}}
@@ -133,12 +172,11 @@
         <div class="marquee enable-animation marquee--reverse">
             <ul class="marquee__content">
                 @foreach ($groupedCustomers->get('Personal care') as $item)
-                    <img src="/storage/img/customer/{{ $item->customer_logo }}" alt="">
+                    <img src="/storage/img/customer/{{ $item->customer_logo }}" alt="{{ $item->customer_name }}">
                 @endforeach
             </ul>
         </div>
     @endif
-
    
     {{-- Food & Beverage Customers --}}
     @if ($groupedCustomers->has('food&beverage'))
@@ -146,12 +184,11 @@
         <div class="marquee enable-animation">
             <ul class="marquee__content">
                 @foreach ($groupedCustomers->get('food&beverage') as $item)
-                    <img src="/storage/img/customer/{{ $item->customer_logo }}" alt="">
+                    <img src="/storage/img/customer/{{ $item->customer_logo }}" alt="{{ $item->customer_name }}">
                 @endforeach
             </ul>
         </div>
-    @endif
-
+    @endif`
    
     
     {{-- General Industry Customers --}}
@@ -160,14 +197,12 @@
         <div class="marquee enable-animation marquee--reverse">
             <ul class="marquee__content">
                 @foreach ($groupedCustomers->get('General Industry') as $item)
-                    <img src="/storage/img/customer/{{ $item->customer_logo }}" alt="">
+                    <img src="/storage/img/customer/{{ $item->customer_logo }}" alt="{{ $item->customer_name }}">
                 @endforeach
             </ul>
         </div>
     @endif
-
     
-
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // Dapatkan semua marquee
@@ -185,6 +220,7 @@
                 // Atur durasi animasi berdasarkan total jarak yang ditempuh
                 marquee.style.animationDuration = `${animationDuration}s`;
             });
+            
         });
     </script>
     

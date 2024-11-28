@@ -1,5 +1,5 @@
 <section class=" w-full relative text-gray-900 p-3">
-    <div class="max-w-screen-lg mx-auto py-5  flex flex-col gap-20 ">
+    <div class="max-w-screen-lg mx-auto pb-14  flex flex-col gap-20 ">
         <h2 class="text-center text-3xl text-primary italic font-semibold"> Why Choose Us ?</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 justify-items-center max-w-3xl mx-auto gap-10 ">
             @foreach ($wCu as $whyc)

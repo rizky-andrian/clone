@@ -1,5 +1,5 @@
 <section class=" w-full relative text-gray-900 p-3">
-    <div class="max-w-screen-lg mx-auto py-5 flex flex-col gap-10 ">
+    <div class="max-w-screen-lg mx-auto py-0 flex flex-col gap-10 ">
         <div class="text-center ">
             <h2 class=" text-3xl text-primary font-semibold"> Our Products</h2>
         </div>

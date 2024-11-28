@@ -204,9 +204,9 @@ Route::prefix('/dashboard')->middleware('auth')->group(function () {
 Route::get('/', [FrontPagesControlller::class, 'index1'])->name('index');
 // Route::get('/home1', [FrontPagesControlller::class, 'index1'])->name('index1');
 Route::get('/about-us', [FrontPagesControlller::class, 'about']);
-Route::get('/about-us/our-history', [FrontPagesControlller::class, 'history']);
-Route::get('/about-us/vision-mission', [FrontPagesControlller::class, 'visimisi']);
-Route::get('/about-us/who-we-are', [FrontPagesControlller::class, 'whoweare']);
+// Route::get('/about-us/our-history', [FrontPagesControlller::class, 'history']);
+// Route::get('/about-us/vision-mission', [FrontPagesControlller::class, 'visimisi']);
+// Route::get('/about-us/who-we-are', [FrontPagesControlller::class, 'whoweare']);
 
 
 Route::prefix('/projects')->group(function () {

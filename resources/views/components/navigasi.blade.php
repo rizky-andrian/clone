@@ -38,7 +38,7 @@
         </div>
         <div class="bg-white mt-5">
             <div class="flex flex-col justify-start ">
-                <div class="container mx-auto max-w-screen-xl hape:hidden">
+                <div class="container mx-auto max-w-screen-xl">
                     <div class="container mx-auto ">
                         <div class="flex py-7 justify-between  ">
                             <div class="flex  flex-1 h-28 flex-col justify-center  ">
@@ -132,7 +132,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="hidden hape:flex hape:justify-between h-12 mx-3 ">
+                <div class="hidden h-12 mx-3 ">
                     <div class="max-h-12 flex justify-start  my-auto">
                         <a href="/">
                             <img class="max-h-12 tablet:max-h-12 cursor-pointer p-2"

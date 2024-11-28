@@ -14,6 +14,7 @@ module.exports = {
             fontSize: {
                 tiny: "9px",
                 xt: "8px",
+                ml: '1.75rem',
             },
             colors: {
                 "primary-color": "#180d51",
@@ -24,6 +25,10 @@ module.exports = {
                 "caa-primary": "#0077BA",
                 "caa-secondary": "#59C6F2",
                 gold: "#FFA81E",
+                green: {
+                    500: '#10B981', // Default Tailwind green
+                    600: '#059669', // Hover green
+                },
             },
             height: {
                 hero: "332px",
@@ -57,6 +62,9 @@ module.exports = {
 
                 desktop: "1280px",
                 // => @media (min-width: 1280px) { ... }
+            },
+            margin: {
+                '1.5': '6px',
             },
         },
     },

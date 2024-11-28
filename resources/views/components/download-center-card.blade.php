@@ -2,7 +2,7 @@
     <div class="max-w-screen-lg mx-auto py-5 text-gray-800">
         <div class="m-0 md:m-8 flex flex-col">
             <div class="grid grid-flow-row grid-cols-3 md:grid-cols-4 gap-2">
-                @foreach ($downlaodCenter as $dokumen)
+                @foreach ($downloadCenter as $dokumen)
                     <div class="grid grid-flow-row grid-cols-1 md:grid-cols-3 bg-white rounded-xl">
 
                         <div class="flex flex-col justify-center ">

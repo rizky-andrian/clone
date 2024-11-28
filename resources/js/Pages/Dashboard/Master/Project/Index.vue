@@ -169,7 +169,7 @@
                                 {{ errors.project_year }}
                             </div>
                         </div>
-                        <div class="flex flex-col gap-2">
+                        <!-- <div class="flex flex-col gap-2">
                             <div class="flex justify-start gap-2">
                                 <input
                                     class="drop-shadow-sm border py-2 px-3 rounded-md focus:outline-none text-sm"
@@ -185,7 +185,74 @@
                             >
                                 {{ errors.status }}
                             </div>
+                        </div> -->
+                        <div class="flex flex-col gap-2">
+                            <label class="text-gray-700">Type</label>
+                            <select
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                v-model="form.project_type"
+                                placeholder="Deskripsikan Project"
+                            >
+                                <option value="on-going">
+                                    On Going Project
+                                </option>
+                                <option value="finished">
+                                    Finished Project
+                                </option>
+                            </select>
+                            <div
+                                class="text-xs px-1 text-red-600"
+                                v-if="errors.project_desc"
+                            >
+                                {{ errors.project_desc }}
+                            </div>
                         </div>
+                        <!-- form gambar -->
+                        <!-- Image Preview -->
+                        <div v-if="updateMode" class="flex justify-center">
+                            <div
+                                v-if="imageBaru"
+                                class="flex justify-between gap-2"
+                            >
+                                <img
+                                    class="rounded-md max-w-sm mx-auto max-h-60"
+                                    :src="imagesShow(imageBaru)"
+                                    alt=""
+                                />
+                            </div>
+                            <div v-else>
+                                <img
+                                    class="rounded-md max-w-sm mx-auto max-h-60"
+                                    :src="
+                                        '/storage/img/project/' +
+                                        imageProject
+                                    "
+                                    alt=""
+                                />
+                            </div>
+                        </div>
+
+                        <!-- Foto Project -->
+                        <div class="flex flex-col gap-2">
+                            <label class="text-gray-700"
+                                >Gambar Project</label
+                            >
+                            <input
+                                class="text-sm"
+                                type="file"
+                                @input="
+                                    form.project_gambar =
+                                        $event.target.files[0];
+                                    uploadFoto();
+                                "
+                            />
+                            <div
+                                class="text-xs px-1 text-red-600"
+                                v-if="errors.project_gambar"
+                            >
+                                {{ errors.project_gambar }}
+                            </div>
+                        </div> 
                         <div
                             class="flex w-full justify-around gap-3"
                             v-if="updateMode"
@@ -240,8 +307,10 @@ export default {
         return {
             modal: false,
             updateMode: false,
+            imageBaru: null,
             singelData: [],
             project_year: "",
+            imageProject: "",
         };
     },
     setup() {
@@ -250,7 +319,8 @@ export default {
             id_customer: null,
             project_desc: "",
             project_year: null,
-            status: null,
+            type: null,
+            project_gambar: "",
         });
 
         return { form };
@@ -268,7 +338,10 @@ export default {
             this.modal = true;
         },
         uploadFoto() {
-            this.project_yearBaru = this.form.project_year;
+            this.imageBaru = this.form.project_gambar;
+        },
+        imagesShow(img) {
+            return URL.createObjectURL(img);
         },
         showData(id) {
             this.modal = true;
@@ -278,7 +351,8 @@ export default {
             this.form.id_customer = this.singelData[0].id_customer;
             this.form.project_name = this.singelData[0].project_name;
             this.form.project_year = this.singelData[0].project_year;
-            this.form.status = this.singelData[0].status;
+            this.form.type = this.singelData[0].type;
+            this.imageProject = this.singelData[0].project_gambar;
         },
         submitForm() {
             if (!this.updateMode) {
@@ -297,7 +371,7 @@ export default {
                         onSuccess: () => {
                             this.form.reset();
                             this.updateMode = false;
-                            this.project_yearBaru = null;
+                            this.imageBaru = null;
                             this.modalCreate = null;
                             this.closedModal();
                         },
@@ -309,7 +383,7 @@ export default {
             this.modal = false;
             this.form.reset();
             this.updateMode = false;
-            this.project_yearBaru = null;
+            this.imageBaru = null;
         },
         deleteButton(id) {
             router.delete("/dashboard/master/project/delete/" + id, {

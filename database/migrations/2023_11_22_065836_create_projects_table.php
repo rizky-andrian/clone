@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('project_name');
             $table->text('project_desc');
             $table->timestamp('project_year');
+            $table->string('type')->nullable();
+            $table->string('project_gambar', 100)->nullable();
             $table->timestamps();
 
             $table->foreign('id_customer')->references('id')->on('customers');

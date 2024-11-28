@@ -38,7 +38,7 @@ class FrontPagesControlller extends Controller
         $wCu = WhyChooseUs::get(['content']);
         $katProduk = KategoriProduk::get(['nama_kategori', 'slugs', 'gambar_produk']);
         $news = BlogNews::orderBy('id', 'DESC')->get(['title', 'slug', 'image', 'content', 'created_at'])->take(2);
-        $downlaodCenter = DownloadCenter::get(['title', 'file_dokumen', 'desc']);
+        $downloadCenter = DownloadCenter::get(['title', 'file_dokumen', 'desc']);
         $customer = Customer::get(['customer_logo', 'customer_name']);
 
         $customers = Customer::select('customer_logo', 'customer_name', 'type')->get();
@@ -49,6 +49,7 @@ class FrontPagesControlller extends Controller
         $personalCareCustomers = $groupedCustomers->get('Personal care', collect());
         $foodBeverageCustomers = $groupedCustomers->get('food&beverage', collect());
         $generalIndustryCustomers = $groupedCustomers->get('General Industry', collect());
+        $projectCustomers = $groupedCustomers->get('Project', collect());
 
         // dd($intro);
         $meta = new Meta($companyInfo[0]->company_name . ' - ' . Meta::$titleKey, ' ' . $companyInfo[0]->company_slogan . ', Supplier water equipment di Indonesia, Distributor cobetter di indonesia, Distributor veolia di indonesia, Catridge filter di indonesia,RO membrane di indonesia', '/storage/img/company/' . $companyInfo[0]->company_logo);
@@ -58,21 +59,22 @@ class FrontPagesControlller extends Controller
                 'pharmaceutical' => $pharmaceuticalCustomers,
                 'personalCareCustomers' => $personalCareCustomers,
                 'foodBeverageCustomers' => $foodBeverageCustomers,
-                'generalIndustryCustomers' => $generalIndustryCustomers
+                'generalIndustryCustomers' => $generalIndustryCustomers,
+                'project' => $projectCustomers
             ],
             'groupedCustomers' => $groupedCustomers,
             'customer' => $customer,
             'companyInfo' => $companyInfo[0],
             'sliders' => $sliders,
             'title' => Meta::getTitle(),
-            'intro' => $intro[0],
+            // 'intro' => $intro[0],
             'brand' => $brand,
             'brandDesc' => $brandDesc[0],
             'history' => $history,
             'wCu' => $wCu,
             'katProduk' => $katProduk,
             'news' => $news,
-            'downlaodCenter' => $downlaodCenter
+            'downloadCenter' => $downloadCenter
         ]);
         // return Inertia::render('FrontPages/LandingPages', ['companyInfo' => $companyInfo[0]]);
     }
@@ -91,7 +93,7 @@ class FrontPagesControlller extends Controller
     }
 
 
-    // Produk and Servis Pages
+    // Produk Pages
     public function produkPages()
     {
         $companyInfo = CompanyInfo::where('id', 1)->get(['company_name', 'company_slogan', 'company_logo', 'company_address', 'company_email', 'company_phone']);
@@ -99,7 +101,7 @@ class FrontPagesControlller extends Controller
         $katProduk = KategoriProduk::get(['id', 'nama_kategori', 'slugs', 'gambar_produk']);
         $brand = BrandProduk::get(['slugs', 'gambar_brand'])->take(5);
         $brandDesc = StaticPages::where('id', 2)->get(['title', 'content']);
-        $Produk = Produk::with(['kategoriProduk', 'brandProduk', 'imagesProduk'])->orderBy('id', 'desc')->paginate(8);
+        $Produk = Produk::whereHas('imagesProduk')->with(['kategoriProduk', 'brandProduk', 'imagesProduk'])->orderBy('created_at', 'asc')->paginate(20);
         $meta = new Meta('Products' . ' - ' . $companyInfo[0]->company_name, 'Product By PT. Cipta Aneka Air, Veolia Membrane RO, Cobetter Filter, Cartridge Filter, Chemical For Water Treatment, Filteration Media', '/storage/img/company/' . $companyInfo[0]->company_logo);
         AnalisisPengunjung::recordVisitor($_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT'], url()->current());
         return view('pages.produk.produk', ['brand' => $brand, 'brandDesc' => $brandDesc[0], 'companyInfo' => $companyInfo[0], 'sliders' => $sliders, 'title' => Meta::getTitle()], compact('katProduk', 'Produk'));
@@ -130,7 +132,7 @@ class FrontPagesControlller extends Controller
         $D_id_kategori = $kategoriProduk->id;
         $brand = BrandProduk::get(['slugs', 'gambar_brand'])->take(5);
         $brandDesc = StaticPages::where('id', 2)->get(['title', 'content']);
-        $produk = Produk::where('id_kategori', $D_id_kategori)->with(['kategoriProduk', 'brandProduk', 'imagesProduk'])->paginate(8);
+        $produk = Produk::where('id_kategori', $D_id_kategori)->with(['kategoriProduk', 'brandProduk', 'imagesProduk'])->paginate(15);
         $meta = new Meta('Distributor ' . $kategoriProduk->nama_kategori . ' di Indonesia - PT. Cipta Aneka Air',  Str::limit($kategoriProduk->deskripsi_kategori, 250, '.'), '/storage/img/kategori-produk/' . $kategoriProduk->gambar_produk);
         AnalisisPengunjung::recordVisitor($_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT'], url()->current());
         return view('pages.produk.produk-by-kategori', ['brand' => $brand, 'brandDesc' => $brandDesc[0], 'companyInfo' => $companyInfo[0], 'title' => Meta::getTitle(), 'kategoriProduk' => $kategoriProduk], compact('DkategoriProduk', 'produk'));
@@ -197,13 +199,24 @@ class FrontPagesControlller extends Controller
     public function about()
     {
         $companyInfo = CompanyInfo::where('id', 1)->get(['company_name', 'company_slogan', 'company_logo', 'company_address', 'company_email', 'company_phone',]);
+        // $sliders = Slider::where('slider_product', 1)->get(['slider_title', 'slider_image']);
+        $teamImages = [
+            (object)[ 'url' => '/assets/img/team1.jpg', 'alt' => 'Team Member 1' ],
+            (object)[ 'url' => '/assets/img/team2.jpg', 'alt' => 'Team Member 2' ],
+            (object)[ 'url' => '/assets/img/team3.jpg', 'alt' => 'Team Member 3' ],
+        ];
         $tentangData = StaticPages::find(5);
+        $companyHistory = CompanyHistory::get(['tahun', 'descripiton'])->take(4);
+        $content =  StaticPages::where('id', 8)->get(['title', 'content']);
+
+        $visi = StaticPages::where('id', 6)->get(['title', 'content']);
+        $misi = StaticPages::where('id', 7)->get(['title', 'content']);
         $brand = BrandProduk::get(['slugs', 'gambar_brand'])->take(5);
         $brandDesc = StaticPages::where('id', 2)->get(['title', 'content']);
         $intro = StaticPages::where('id', 1)->get(['title', 'content'])->first();
         $meta = new Meta('About Us ' . ' - ' . $companyInfo[0]->company_name, strip_tags(Str::limit($brandDesc[0]->content, 315, '..')), '/storage/img/company/' . $companyInfo[0]->company_logo);
         AnalisisPengunjung::recordVisitor($_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT'], url()->current());
-        return view('pages.about.tentang-kami', ['intro' => $intro, 'companyInfo' => $companyInfo[0], 'tentangData' => $tentangData, 'brand' => $brand, 'brandDesc' => $brandDesc[0],  'title' => Meta::getTitle()]);
+        return view('pages.about.tentang-kami', ['intro' => $intro, 'companyInfo' => $companyInfo[0], 'tentangData' => $tentangData, 'brand' => $brand, 'brandDesc' => $brandDesc[0],  'title' => Meta::getTitle(), 'companyHistory' => $companyHistory, 'content' => $content[0], 'visi' => $visi[0], 'misi' => $misi[0], 'teamImages' => $teamImages,]); //, 'sliders' => $sliders
     }
 
     // history
@@ -232,7 +245,7 @@ class FrontPagesControlller extends Controller
         AnalisisPengunjung::recordVisitor($_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT'], url()->current());
         return view('pages.about.visimisi', ['brand' => $brand, 'brandDesc' => $brandDesc[0], 'companyInfo' => $companyInfo[0], 'tentangData' => $tentangData,  'title' => Meta::getTitle(), 'visi' => $visi[0], 'misi' => $misi[0]]);
     }
-
+    
     // whoweare
     public function whoweare()
     {

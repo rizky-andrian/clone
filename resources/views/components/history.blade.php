@@ -3,7 +3,7 @@ $thisYear = date('Y') - 2008;
 @endphp
 
 <section class=" w-full relative text-gray-900 px-5">
-    <div class="max-w-screen-lg mx-auto py-14  flex flex-col gap-7 ">
+    <div class="max-w-screen-lg mx-auto py-2  flex flex-col gap-7 ">
         <h2 class="text-center text-3xl text-primary italic font-semibold"> {{ $thisYear }} Years of
             PT.
             Cipta

@@ -1,4 +1,4 @@
-<section class="max-w-screen-lg mx-auto relative mb-6">
+<section class="max-w-screen-lg mx-auto relative mb-0">
     <div class="absolute flex flex-col justify-center h-full w-full">
         <div class="flex justify-between mx-2">
             <button
@@ -19,7 +19,6 @@
                     <img class="object-cover h-full w-hero rounded-3xl"
                         src="{{ '/storage/img/sliders/' . $item->slider_image }}" alt="{{ $item->slider_title }}">
                 </div>
-            </li>
             </li>
         @endforeach
     </ul>

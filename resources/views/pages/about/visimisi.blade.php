@@ -7,7 +7,7 @@
         <div class="absolute bg-caa-primary top-0 h-full flex flex-col justify-center bg-opacity-50 w-full rounded-2xl">
             <div class=" mx-auto ">
                 <div class="  text-center text-gray-100 ">
-                    <h1 class=" font-bold text-6xl  ">ABOUT <span class=" underline ">US</span></h1>
+                    <h1 class=" font-bold text-6xl  ">ABOUT US></h1>
                 </div>
             </div>
         </div>

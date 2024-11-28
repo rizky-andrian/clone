@@ -4,7 +4,7 @@
     <div class="w-full ">
         <div class="flex flex-col gap-10 mb-10 max-w-screen-lg  mx-auto ">
             {{-- Brand Product --}}
-            <div class="flex flex-col gap-2">
+            {{-- <div class="flex flex-col gap-2">
                 <div class="grid grid-cols-3 lg:grid-cols-7 justify-items-center gap-2 mt-5">
                     @foreach ($DkategoriProduk as $item)
                         <a href="/products/kategori/{{ $item->slugs }}"
@@ -19,7 +19,7 @@
                         </a>
                     @endforeach
                 </div>
-            </div>
+            </div> --}}
             {{-- END Brand Product --}}
 
             {{-- Produk Bykategori --}}

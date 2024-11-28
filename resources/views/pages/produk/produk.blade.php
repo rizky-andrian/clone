@@ -25,9 +25,9 @@
                                 </div>
                             </div>
                             <a href="/products/kategori/{{ $item->slugs }}"
-                                class="absolute top-0 flex flex-col justify-center h-48 w-full px-6">
+                                class="absolute bottom-0 flex flex-col justify-end h-48 w-full px-6">
                                 <div
-                                    class=" bg-caa-primary bg-opacity-60 text-white hover:text-caa-primary hover:bg-white font-semibold hover:drop-shadow-xl rounded-tl-2xl rounded-br-2xl ">
+                                    class=" bg-primary bg-opacity-80 text-white text-sm rounded-2xl rounded-br-2xl">
                                     <h2 class="mx-auto text-center py-2">{{ $item->nama_kategori }}</h2>
                                 </div>
                             </a>
@@ -69,7 +69,6 @@
                                     <span class="uppercase">{{ $Dproduk->kategoriProduk->nama_kategori }}</span>
                                 </div>
                             </div>
-
                         </div>
                         <a href="/products/{{ $Dproduk->slugs }}"
                             class="absolute top-0 flex flex-col justify-center h-full w-full">
